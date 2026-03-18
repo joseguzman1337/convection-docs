@@ -1,0 +1,433 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=1024" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Convection 101</title>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/darkly/bootstrap.min.css" rel="stylesheet" /> -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/united/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="/resource/impress.css" rel="stylesheet" />
+
+  <link rel="shortcut icon" href="/favicon.png" />
+</head>
+
+<body>
+  <div id="impress">
+
+    <div id="title" class="step panel panel-primary" data-x="0" data-y="0">
+      <div class="panel-body title">
+        <h1>Convection</h1>
+        <h2>101: CloudFormation, Templates, and Stacks</h2>
+      </div>
+    </div>
+
+    <div id="contents" class="step panel panel-primary" data-x="1048" data-y="0">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-bars"></i>&nbsp;Contents</h1>
+        <div class="row">
+          <div class="col-md-5">
+            <a href="#/cf-basics">
+              <h2><i class="fa fa-cloud"></i>&nbsp;CloudForamtion</h2>
+            </a>
+            <div class="list-group">
+              <a class="list-group-item" href="#/cf-model">Model</a>
+              <a class="list-group-item" href="#/cf-template">Templates</a>
+              <a class="list-group-item" href="#/cf-permissions">Permissions</a>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <a href="#/c-basics">
+              <h2><i class="fa fa-refresh"></i>&nbsp;Convection</h2>
+            </a>
+            <div class="list-group">
+              <a class="list-group-item" href="#/c-dsl">Templates</a>
+              <a class="list-group-item" href="#/c-cloud">Clouds</a>
+              <a class="list-group-item" href="#/c-packaging">Packaging</a>
+              <a class="list-group-item" href="#/c-usage">Usage</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="cf-basics" class="step panel panel-primary" data-x="2096" data-y="0">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-cloud"></i>&nbsp;CloudFormation</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;An AWS service for managing AWS resources with</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;A desired state definition language</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;An API to accept definition documents</p>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Provides matadata about managed resources</p>
+        <p class="text-danger"><i class="fa fa-arrow-right"></i>&nbsp;Does not inspect physical state of managed resources</p>
+        <p class="text-danger"><i class="fa fa-arrow-right"></i>&nbsp;Can not manage resources that were created outside of CloudFormation</p>
+      </div>
+    </div>
+
+    <div id="cf-model" class="step panel panel-primary" data-x="2096" data-y="792">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-cloud"></i>&nbsp;CloudFormation: Model</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;<b>Templates</b> define of a set of AWS resources that CloudFormation will create</p>
+        <div class="indent">
+          <pre>"Resources": {
+  "Logical ID": {
+    "Type": "Resource type",
+    "Properties": {
+      Set of properties
+    }
+  }
+}</pre>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Resources are defined as prototypes called <code>Logical Resources</code></p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Logical Resources must have a unique key, called a <code>Logical ID</code>, a
+            <code>Type</code> and <code>Properties</code></p>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;<b>Stacks</b> use templates to manage AWS resources</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;CloudFormation refers to the AWS resources that it creates and manages
+            as <code>Physical Resources</code></p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;The identities assigned to Physical Resources by their respective services
+            are called <code>Physical IDs</code>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Stacks map the set of resource prototypes defined in a template to the
+            <code>Phyiscal IDs</code></p>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Read Amazon's
+          <a target="_blank" href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/Welcome.html">Published Documentation!</a>
+        </p>
+      </div>
+    </div>
+
+    <div id="cf-template" class="step panel panel-primary" data-x="2096" data-y="1584">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-cloud"></i>&nbsp;CloudFormation: Template</h1>
+        <p>Templates have several sub-sections. We're going to look at the <code>Resources</code> section in detail</p>
+        <div class="indent">
+          <pre>"Resources": {
+  "Logical ID": {
+    "Type": "Resource type",
+    "Properties": {
+      Set of properties
+    }
+  }
+}</pre>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;For a complete description of CloudFormation Templates, see
+            <a target="_blank" href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html">The Docs</a>
+          </p>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;A resource's
+          <code>Logical ID</code> must be alphanumeric (A-Za-z0-9) and unique within the template
+          <p>
+
+            <p><i class="fa fa-arrow-right"></i>&nbsp;A resource's
+              <code>Type</code> defines the physical AWS resource that it defines.</p>
+            <div class="indent">
+              <p><i class="fa fa-arrow-right"></i>&nbsp;Type strings follow a simple pattern:
+                <code>AWS::&lt;Service&gt;::&lt;ResourceType&gt;</code>
+              </p>
+              <p><i class="fa fa-arrow-right"></i>&nbsp;CloudFormation supports a set of types. See
+                <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html">The Docs</a>
+              </p>
+            </div>
+            <p><i class="fa fa-arrow-right"></i>&nbsp;A resource's
+              <code>Properties</code> are set of key/value pairs specific to the resource type</p>
+      </div>
+    </div>
+
+    <div id="cf-permissions" class="step panel panel-primary" data-x="2096" data-y="2376">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-cloud"></i>&nbsp;CloudFormation: Permissions</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;CloudFormation performs actions on your behalf, using IAM's <code>assume-role</code>
+          functionality.</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;When you create a stack, the CloudFormation service is only able to perform actions that
+            your IAM user is authorized to perform.</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Check out the
+            <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html#d0e69121">Troubleshooting Guide</a>
+            for some suggestions to fix this.
+          </p>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Managing IAM resources requires an additional flag in API requests</p>
+        <div class="indent">
+          <pre>
+client.create_stack({
+  stack_name: "StackName", # required
+  template_body: "TemplateBody",
+  ...
+  <b>capabilities: ["CAPABILITY_IAM"], # accepts CAPABILITY_IAM</b>
+  ...
+})
+          </pre>
+        </div>
+      </div>
+    </div>
+
+    <div id="c-basics" class="step panel panel-primary" data-x="3144" data-y="0">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-refresh"></i>&nbsp;Convection</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;A featureful DSL for CloudFormation templates</p>
+        <p><i class="fa fa-arrow-right"></i>&nbsp;A packaging system to make templates reusable</p>
+        <p><i class="fa fa-arrow-right"></i>&nbsp;A control plane for loading packages, verifying dependencies, and orchestrating API calls</p>
+
+      </div>
+    </div>
+
+    <div id="c-dsl" class="step panel panel-primary" data-x="3144" data-y="792">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-refresh"></i>&nbsp;Convection: DSL</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Parsed as Ruby</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Use Ruby control structures: <code>if</code>, <code>unless</code>, <code>while</code>, <code>until</code></p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Use Ruby modules: <code>require 'yaml'</code></p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Use Ruby linters, formatters, and test frameworks!</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <pre>
+Convection.template do
+  ...
+  ec2_instance 'MyInstance' do
+    image_id find_in_map('Images', stack.region, 'hvm')
+    instance_type 'm3.large'
+    key_name find_in_map('Keys', stack.region, 'key')
+    subnet stack.get('vpc', 'Subnets', []).first
+    security_group stack.get('security-groups', 'MySG')
+
+    tag 'Name', 'my-instance'
+    tag 'Service', 'my-service'
+    tag 'Stack', stack.cloud
+  end
+
+  route53_recordset 'MyInstanceDNS' do
+    zone 'Z123456'
+    record_name "myservice.#{stack.region}.example.com."
+    record_type 'CNAME'
+    record get_att('MyInstance', 'PublicDnsName')
+    ttl 30
+  end
+end
+            </pre>
+          </div>
+          <div class="col-md-6">
+            <pre>
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "",
+  "Parameters": { ... },
+  "Mappings": { ... },
+  "Resources": {
+    "MyInstance": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "ImageId": {
+          "Fn::FindInMap": ["Images", "us-east-1" , "hvm"]
+        },
+        "InstanceType": "m3.large",
+        "KeyName": {
+          "Fn::FindInMap": ["Keys", "us-east-1", "key"]
+        },
+        "SubnetId":"subnet-f00ba4",
+        "SecurityGroupIds": ["sg-12345678"],
+        "Tags": [{
+          "Key": "Name",
+          "Value": "my-instance"
+        ...
+}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="c-dsl-2" class="step panel panel-primary" data-x="3144" data-y="1584">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-refresh"></i>&nbsp;Convection: DSL</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Convection templates are rendered to CloudFormation JSON at converge-time. This allows data about the environment to be inserted into the template dynamicly</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Region, Stack name</p>
+          <div class="row">
+            <div class="col-md-6">
+              <pre>{ "Ref":"AWS::Region" }</pre>
+            </div>
+            <div class="col-md-6">
+              <pre>stack.region -> 'us-east-1'</pre>
+            </div>
+          </div>
+
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Attributes and Physical IDs from other stacks</p>
+          <div class="row">
+            <div class="col-md-6">
+              <pre>"SecurityGroupIds": ["sg-12345678"], ## Hard-coded :(</pre>
+            </div>
+            <div class="col-md-6">
+              <pre>stack.get('security-groups', 'MySG') -> ['sg-12345678']</pre>
+            </div>
+          </div>
+
+          <p><i class="fa fa-arrow-right"></i>&nbsp;String interpolation!</p>
+          <pre>record_name "myservice.#{stack.region}.example.com."</pre>
+        </div>
+      </div>
+    </div>
+
+    <div id="c-cloud" class="step panel panel-primary" data-x="3144" data-y="2376">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-refresh"></i>&nbsp;Convection: Clouds</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;A Convection Cloud is a collection of CloudFormation Stacks managed as a unit</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Clouds are defined in <code>Cloudfiles</code></p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;<code>Cloudfiles</code> use Ruby to load templates</p>
+          <pre>
+require_relative '../../../templates'
+
+name 'dev-0'
+region 'us-east-1'
+
+stack 'elb', Templates::ELB</pre>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Templates and Cloudfiles can be organized to suit the needs of the environment</p>
+        <div class="indent">
+          <pre>
+my-clouds
+├── Gemfile
+├── clouds
+│   ├── eu-central-1
+│   │   └── dev-0
+│   │       └── Cloudfile
+│   └── us-east-1
+│       ├── dev-0
+│       │   └── Cloudfile
+│       └── dev-1
+│           └── Cloudfile
+├── templates
+│   ├── elb.rb
+│   ├── security_group.rb
+│   └── vpc.rb
+└── templates.rb</pre>
+        </div>
+      </div>
+    </div>
+
+    <div id="c-packaging" class="step panel panel-primary" data-x="3144" data-y="3168">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <div class="alert alert-danger"><i class="fa fa-exclamation-triangle"></i>&nbsp;This is being implemented in Convection v1.0</div>
+        <h1><i class="fa fa-refresh"></i>&nbsp;Convection: Packaging</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Packaging allows for safe, dynamic sharing of templates and extensions to the DSL</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Versioning and dependency enforcement</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;No more copy pasta</p>
+          <pre>
+convection-package
+├── Gemfile
+├── convection-package.gemspec
+├── clouds
+│   ├── dev-0.rb
+│   ├── dev-1.rb
+│   └── dev-2.rb
+├── templates
+│   ├── elb.rb
+│   ├── security_group.rb
+│   └── vpc.rb
+└── resources</pre>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Provides/Depends API</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Allow a Convection template to declare that it provides in interface</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Allow other Convection templates to declare that they require an interface</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;Fail safely if requirements are not met</p>
+        </div>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Allow teams to manage their own clouds. No more waiting for CORE to merge and converge!</p>
+      </div>
+    </div>
+
+    <div id="c-usage" class="step panel panel-primary" data-x="3144" data-y="3960">
+      <div class="panel-heading">Convection 101: CloudFormation, Templates, and Stacks</div>
+      <div class="panel-body slide">
+        <h1><i class="fa fa-refresh"></i>&nbsp;Convection: Usage</h1>
+
+        <p><i class="fa fa-arrow-right"></i>&nbsp;Convection is a CLI</p>
+        <div class="indent">
+          <p><i class="fa fa-arrow-right"></i>&nbsp;<code>bundle exec convection converge [STACK]</code> Render templates and create/update stacks up to the optional STACK</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;<code>bundle exec convection diff</code> Render templates and compare to existing stacks</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;<code>bundle exec convection print STACK</code> Render template for STACK and pretty-print JSON to STDOUT</p>
+          <p><i class="fa fa-arrow-right"></i>&nbsp;<code>bundle exec convection validate STACK</code> Render template for STACK and send it to the CloudFormation validation API</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="overview" class="step" data-x="2048" data-y="2376" data-scale="6">
+    </div>
+  </div>
+
+  <nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a href="#/contents"><i class="fa fa-bars"></i>&nbsp;Contents</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-cloud"></i>&nbsp;CloudFormation&nbsp;<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/cf-basics">Basics</a></li>
+            <li><a href="#/cf-model">Model</a></li>
+            <li><a href="#/cf-template">Templates</a></li>
+            <li><a href="#/cf-permissions">Permissions</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-refresh"></i>&nbsp;Convection&nbsp;<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/c-basics">Basics</a></li>
+            <li><a href="#/c-dsl">Templates</a></li>
+            <li><a href="#/c-cloud">Clouds</a></li>
+            <li><a href="#/c-packaging">Packaging</a></li>
+            <li><a href="#/c-usage">Usage</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav pull-right">
+        <li><a target="_blank" href="https://github.com/rapid7/convection">
+          <i class="fa fa-github"></i>&nbsp;Source Code
+        </a></li>
+        <li><a href="#/overview"><i class="fa fa-search"></i>&nbsp;Overview</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="/resource/impress.js"></script>
+  <script>
+    impress().init();
+  </script>
+</body>
+
+</html>
