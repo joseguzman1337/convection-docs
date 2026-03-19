@@ -4,7 +4,7 @@
   "description": "Presentation material for Convection",
   "main": "bin/server",
   "dependencies": {
-    "express": "4.x"
+    "express": "5.x"
   },
   "author": "John Manero <jmanero@rapid7.com>",
   "license": "MIT"
